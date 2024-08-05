@@ -11,7 +11,6 @@ public class TestToWin {
                 return false;
             }
         }
-        System.out.println("Ok you win");
         return true;
     }
 }
