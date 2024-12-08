@@ -2,6 +2,7 @@ package pet.hungman.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import pet.hungman.repository.convereter.CharacterListConverter;
 import pet.hungman.repository.convereter.StringListConverter;
 
@@ -14,7 +15,7 @@ public class GameSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID keyId; //keyId = ID
+    private UUID keyId; // keyId = ID
 
     @Column(name = "word")
     private String word;
@@ -31,5 +32,6 @@ public class GameSession {
     private List<String> suggestedByUser;
 
     @OneToOne(mappedBy = "gameSession")
+    @ToString.Exclude
     private UserEntity userEntity;
 }

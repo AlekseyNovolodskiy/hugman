@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pet.hungman.repository.UserEntityRepository;
 import pet.hungman.service.AuthService;
 import pet.hungman.service.HungmanGame;
 import pet.hungman.service.HungmanStartGame;
-import pet.hungman.service.programmbody.WordBody;
 
 import static pet.hungman.controllers.PathConstant.GAME;
 import static pet.hungman.controllers.PathConstant.NEW_GAME;
@@ -26,24 +24,32 @@ public class HungmanController {
 
     @GetMapping("/")
     public String index() {
-        return "start.html";
+        return "index.html";
     }
 
-
-    @GetMapping("/hungman/auth/")
+    @GetMapping("/hungman/auth")
     public String authorization(@RequestParam String login, @RequestParam String password, Model model) {
-        return authService.authTheUser(login, password, model);
+        String result = authService.authTheUser(login, password, model);
+        if ("start".equals(result)) {
+            model.addAttribute("username", login);
+        }
+        return result;
     }
 
 
     @GetMapping(NEW_GAME)
-    public String hungMan(@RequestParam Integer complexity, Model model) {
-        return hungmanStartGame.bodyChaineMethod(complexity, model);
+    public String hungMan(@RequestParam Integer complexity, @RequestParam String username, Model model) {
+        return hungmanStartGame.bodyChaineMethod(complexity, username, model);
     }
-
 
     @GetMapping(GAME)
     public String hungManTheGame(@RequestParam String symbol, @RequestParam String key, Model model) {
         return hungmanGame.hungmanStartTheGame(symbol, key, model);
+    }
+
+    @GetMapping("/hungman/start")
+    public String startNewGame(@RequestParam String username, Model model) {
+        model.addAttribute("username", username);
+        return "start";
     }
 }

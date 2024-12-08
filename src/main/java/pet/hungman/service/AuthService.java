@@ -11,7 +11,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class AuthService {
-    private UserEntityRepository userEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
     public String authTheUser(String login, String password, Model model) {
         Optional<UserEntity> byLoginAndPassword = userEntityRepository.findByLoginAndPassword(login, password);
@@ -28,11 +28,10 @@ public class AuthService {
         if (userEntity.getGameSession() != null) {
             model.addAttribute("sessionKey", userEntity.getGameSession().getKeyId());
             model.addAttribute("maskedWord", userEntity.getGameSession().getMask());
+            model.addAttribute("username", userEntity.getLogin());
             return "game";
         }
 
-        return "index";
+        return "start";
     }
-
-
 }

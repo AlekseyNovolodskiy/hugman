@@ -3,7 +3,7 @@ package pet.hungman.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -25,6 +25,6 @@ public class UserEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gamesession_id")
+    @ToString.Exclude
     private GameSession gameSession;
-
 }

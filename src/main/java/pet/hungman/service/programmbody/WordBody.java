@@ -2,7 +2,6 @@ package pet.hungman.service.programmbody;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pet.hungman.repository.WordRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,30 +13,9 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class WordBody {
-    private final WordRepository wordRepository;
-//    private final Complexity compexity;
-
-
 
     public String word(int compl) {
 
-//        compl = compexity.getInter();
-//        String line = null;
-//
-//        if (compl == 8) {
-//            line = wordRepository.getTheWords8();
-//        }
-//        if (compl == 7) {
-//            line = wordRepository.getTheWords7();
-//        }
-//        if (compl == 6) {
-//            line = wordRepository.getTheWords6();
-//        }
-//        if (compl == 5) {
-//            line = wordRepository.getTheWords5();
-//        }
-//
-//        return line;
         ArrayList<String> arrayOfWord = new ArrayList();
 
 
@@ -84,17 +62,16 @@ public class WordBody {
         return list;
     }
 
-    public List<Character> masked(String symbol, String string, List list2) {
-        List list = new ArrayList();
+    public List<Character> masked(String symbol, String string, List<Character> mask) {
+        List<Character> updatedMask = new ArrayList<>();
         for (int i = 0; i < string.length(); i++) {
             if (symbol.toLowerCase().charAt(0) == string.toLowerCase().charAt(i)) {
-                list.add(symbol.toLowerCase().charAt(0));
+                updatedMask.add(symbol.toLowerCase().charAt(0));
             } else {
-                list.add(list2.get(i));
+                updatedMask.add(mask.get(i));
             }
         }
-        return list;
-
+        return updatedMask;
     }
 
     public boolean testToWin(List list) {
